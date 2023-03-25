@@ -52,20 +52,20 @@ public class TaskDaoTest {
 
     @Test
     public void insertTask() throws InterruptedException {
-        this.mDatabase.mTaskDao().addTask(TASK_DEMO);
         List<Task> listTask = LiveDataTestUtil.getValue(this.mDatabase.mTaskDao().getTasks());
+        Assert.assertEquals(0, listTask.size());
+        this.mDatabase.mTaskDao().addTask(TASK_DEMO);
+        listTask = LiveDataTestUtil.getValue(this.mDatabase.mTaskDao().getTasks());
         Assert.assertEquals(1, listTask.size());
-        Task task = LiveDataTestUtil.getValue(this.mDatabase.mTaskDao().getTask(TASK_DEMO.getId()));
-        Assert.assertTrue(task.getName().equals(TASK_DEMO.getName()) && task.getId() == TASK_ID);
     }
 
     @Test
     public void deleteTask() throws InterruptedException {
-        this.mDatabase.mTaskDao().addTask(TASK_DEMO);
         List<Task> listTask = LiveDataTestUtil.getValue(this.mDatabase.mTaskDao().getTasks());
+        Assert.assertEquals(0, listTask.size());
+        this.mDatabase.mTaskDao().addTask(TASK_DEMO);
+        listTask = LiveDataTestUtil.getValue(this.mDatabase.mTaskDao().getTasks());
         Assert.assertEquals(1, listTask.size());
-        Task task = LiveDataTestUtil.getValue(this.mDatabase.mTaskDao().getTask(TASK_ID));
-        Assert.assertTrue(task.getName().equals(TASK_DEMO.getName()) && task.getId() == TASK_ID);
         this.mDatabase.mTaskDao().deleteTask(TASK_DEMO.getId());
         listTask = LiveDataTestUtil.getValue(this.mDatabase.mTaskDao().getTasks());
         Assert.assertEquals(0, listTask.size());
