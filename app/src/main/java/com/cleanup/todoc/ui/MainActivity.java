@@ -100,21 +100,9 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
         setContentView(R.layout.activity_main);
 
-        listTasks = findViewById(R.id.list_tasks);
-        lblNoTasks = findViewById(R.id.lbl_no_task);
-
-        listTasks.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        listTasks.setAdapter(adapter);
-
-        findViewById(R.id.fab_add_task).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAddTaskDialog();
-            }
-        });
-
         configureViewModel();
-        getProject();
+        initView();
+
         getTasks();
     }
 
@@ -123,12 +111,23 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         this.mViewModel.init();
     }
 
-    private void getProject() {
-        mViewModel.getProjects().observe(this, this::updateProjects);
+    private void initView() {
+        findViewById(R.id.fab_add_task).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAddTaskDialog();
+            }
+        });
+
+        configureRecyclerView();
     }
 
-    private void updateProjects(List<Project> projects) {
-        allProjects = projects;
+    private void configureRecyclerView() {
+        listTasks = findViewById(R.id.list_tasks);
+        lblNoTasks = findViewById(R.id.lbl_no_task);
+
+        listTasks.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        listTasks.setAdapter(adapter);
     }
 
     private void getTasks() {

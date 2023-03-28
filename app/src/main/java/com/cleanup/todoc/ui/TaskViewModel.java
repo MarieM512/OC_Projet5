@@ -3,9 +3,7 @@ package com.cleanup.todoc.ui;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
-import com.cleanup.todoc.repositories.ProjectDataRepository;
 import com.cleanup.todoc.repositories.TaskDataRepository;
 
 import java.util.List;
@@ -15,26 +13,20 @@ public class TaskViewModel extends ViewModel {
 
     // REPOSITORIES
     private final TaskDataRepository mTaskDataRepository;
-    private final ProjectDataRepository mProjectDataRepository;
     private final Executor mExecutor;
 
     // DATA
-    private LiveData<List<Project>> mLiveData;
+    private LiveData<List<Task>> mLiveData;
 
-    public TaskViewModel(TaskDataRepository taskDataRepository, ProjectDataRepository projectDataRepository, Executor executor) {
+    public TaskViewModel(TaskDataRepository taskDataRepository, Executor executor) {
         this.mTaskDataRepository = taskDataRepository;
-        this.mProjectDataRepository = projectDataRepository;
         this.mExecutor = executor;
     }
 
     public void init() {
         if (this.mLiveData == null) {
-            mLiveData = mProjectDataRepository.getProject();
+            mLiveData = mTaskDataRepository.getTasks();
         }
-    }
-
-    public LiveData<List<Project>> getProjects() {
-        return mLiveData;
     }
 
     public LiveData<List<Task>> getTasks() {

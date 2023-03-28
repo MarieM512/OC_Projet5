@@ -66,7 +66,7 @@ public class TaskDaoTest {
         this.mDatabase.mTaskDao().addTask(TASK_DEMO);
         listTask = LiveDataTestUtil.getValue(this.mDatabase.mTaskDao().getTasks());
         Assert.assertEquals(1, listTask.size());
-        this.mDatabase.mTaskDao().deleteTask(TASK_DEMO.getId());
+        this.mDatabase.mTaskDao().deleteTask(TASK_DEMO);
         listTask = LiveDataTestUtil.getValue(this.mDatabase.mTaskDao().getTasks());
         Assert.assertEquals(0, listTask.size());
     }
