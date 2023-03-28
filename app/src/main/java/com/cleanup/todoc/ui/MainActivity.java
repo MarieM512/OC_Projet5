@@ -24,7 +24,6 @@ import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     /**
      * List of all projects available in the application
      */
-    private List<Project> allProjects = Arrays.asList(Project.getAllProjects());
+    private final Project[] allProjects = Project.getAllProjects();
 
     /**
      * List of all current tasks of the application
@@ -100,18 +99,11 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
         setContentView(R.layout.activity_main);
 
-        configureViewModel();
-        initView();
-
-        getTasks();
-    }
-
-    private void configureViewModel() {
+        // Configure ViewModel
         this.mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance(this)).get(TaskViewModel.class);
         this.mViewModel.init();
-    }
 
-    private void initView() {
+        // Init view
         findViewById(R.id.fab_add_task).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,15 +111,14 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             }
         });
 
-        configureRecyclerView();
-    }
-
-    private void configureRecyclerView() {
+        // Configure RecyclerView
         listTasks = findViewById(R.id.list_tasks);
         lblNoTasks = findViewById(R.id.lbl_no_task);
 
         listTasks.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         listTasks.setAdapter(adapter);
+
+        getTasks();
     }
 
     private void getTasks() {
