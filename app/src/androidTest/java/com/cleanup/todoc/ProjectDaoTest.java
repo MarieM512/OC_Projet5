@@ -46,4 +46,11 @@ public class ProjectDaoTest {
         projectList = LiveDataTestUtil.getValue(this.mDatabase.mProjectDao().getProject());
         Assert.assertEquals(3, projectList.size());
     }
+
+    @Test
+    public void getProject() throws InterruptedException {
+        this.mDatabase.mProjectDao().insertProjects(mProjects);
+        List<Project> projectList = LiveDataTestUtil.getValue(this.mDatabase.mProjectDao().getProject());
+        Assert.assertEquals(3, projectList.size());
+    }
 }
